@@ -3,13 +3,11 @@ package xyz.lakmatiol.knight;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.RootNode;
 import xyz.lakmatiol.knight.ast.Expression;
+import xyz.lakmatiol.knight.ast.binary.Seq;
 import xyz.lakmatiol.knight.ast.nullary.*;
 import xyz.lakmatiol.knight.ast.Root;
 import xyz.lakmatiol.knight.ast.binary.PlusNodeGen;
-import xyz.lakmatiol.knight.ast.unary.Block;
-import xyz.lakmatiol.knight.ast.unary.EvalNodeGen;
-import xyz.lakmatiol.knight.ast.unary.SameNodeGen;
-import xyz.lakmatiol.knight.ast.unary.ShellNodeGen;
+import xyz.lakmatiol.knight.ast.unary.*;
 
 import java.io.*;
 import java.nio.CharBuffer;
@@ -20,6 +18,9 @@ import java.util.Scanner;
 
 public class Parser {
     private record Token(TokenKind k, String data) {
+        public boolean isSeq() {
+            return k == TokenKind.FUN && ";".equals(data);
+        }
     }
 
     private enum TokenKind {
@@ -112,12 +113,33 @@ public class Parser {
             case '`' -> ShellNodeGen.create(parseRec(toParse));
             case 'E' -> EvalNodeGen.create(parseRec(toParse));
             case ':' -> SameNodeGen.create(parseRec(toParse));
+            case 'A' -> AsciiNodeGen.create(parseRec(toParse));
+            case 'C' -> CallNodeGen.create(parseRec(toParse));
+            case 'D' -> DumpNodeGen.create(parseRec(toParse));
+            case 'L' -> LenNodeGen.create(parseRec(toParse));
+            case '!' -> NegNodeGen.create(parseRec(toParse));
+            case 'O' -> OutputNodeGen.create(parseRec(toParse));
+            case 'Q' -> QuitNodeGen.create(parseRec(toParse));
+            case ';' -> parseBlock(toParse);
             default -> throw new RuntimeException(String.format("function '%s' not implemented", fName));
         };
     }
 
+    private Expression parseBlock(Iterator<Token> toParse) {
+        var args = new ArrayList<Expression>();
+        Token right;
+        do {
+            args.add(parseRec(toParse));
+            right = toParse.next();
+        } while(right.isSeq());
+        args.add(parseRec(toParse, right));
+        return new Seq((Expression[]) args.toArray());
+    }
+
     private Expression parseRec(Iterator<Token> toParse) {
-        var tok = toParse.next();
+        return parseRec(toParse, toParse.next());
+    }
+    private Expression parseRec(Iterator<Token> toParse, Token tok) {
         return switch (tok.k()) {
             case FUN -> parseFunction(toParse, tok.data());
             case NUM -> new Num(Long.parseLong(tok.data()));
@@ -128,7 +150,6 @@ public class Parser {
 
     public RootNode parse() throws IOException {
         Iterable<Token> tokenize = tokenize();
-        System.err.println(tokenize);
         return new Root(lang, parseRec(tokenize.iterator()));
     }
 }
