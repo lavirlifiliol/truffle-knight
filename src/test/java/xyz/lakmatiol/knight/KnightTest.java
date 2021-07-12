@@ -19,7 +19,7 @@ class KnightTest {
     @BeforeEach
     void setupCtx() {
         ctx = Context.newBuilder("Knight")
-                .in(new ByteArrayInputStream("asdf\r\n".getBytes(StandardCharsets.UTF_8)))
+                .in(new ByteArrayInputStream("asdf\r\nfdsa\r\n".getBytes(StandardCharsets.UTF_8)))
                 .out(System.out)
                 .build();
     }
@@ -74,7 +74,7 @@ class NullaryTest extends KnightTest {
     }
 }
 
-class UnaryTests extends KnightTest {
+class UnaryTest extends KnightTest {
     @Test
     void testBlockCall() {
         assertProduces("C B 5", 5);
@@ -102,5 +102,13 @@ class UnaryTests extends KnightTest {
     void testAscii() {
         assertProduces("A 38", "&");
         assertProduces("A \"&asdf\"", 38);
+    }
+}
+
+class BinaryTest extends KnightTest {
+    @Test
+    void testSeq() {
+        assertProduces("; 1 ; 2 ; 3 ; 4 : 5", 5);
+        assertProduces("; 1 ; P ; 3 ; 4 : P", "fdsa");
     }
 }

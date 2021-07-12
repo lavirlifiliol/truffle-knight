@@ -133,7 +133,7 @@ public class Parser {
             right = toParse.next();
         } while(right.isSeq());
         args.add(parseRec(toParse, right));
-        return new Seq((Expression[]) args.toArray());
+        return new Seq(args.toArray(new Expression[]{}));
     }
 
     private Expression parseRec(Iterator<Token> toParse) {
