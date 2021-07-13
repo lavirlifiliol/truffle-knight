@@ -94,6 +94,11 @@ public class Parser {
                 }
                 currentData.append(r);
             } else if (":`!+-*/%^<>?&|;=".contains(s)) {
+                if (currentKind != null) {
+                    l.add(new Token(currentKind, currentData.toString()));
+                }
+                currentKind = null;
+                currentData = new StringBuilder();
                 l.add(new Token(TokenKind.FUN, s));
             }
             c = read.read();

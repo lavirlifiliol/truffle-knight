@@ -38,6 +38,10 @@ class KnightTest {
         var src = Source.create("Knight", s);
         Assertions.assertEquals(result, ctx.eval(src).asLong());
     }
+    @Test
+    void testParser() {
+        assertProduces(";=next_ast_name_0+'__ast_fn_'0 next_ast_name_0", "__ast_fn_0");
+    }
 
 }
 
