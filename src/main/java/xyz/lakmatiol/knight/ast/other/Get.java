@@ -7,14 +7,14 @@ import xyz.lakmatiol.knight.ast.Types;
 
 @NodeChild("a")
 @NodeChild("s")
-@NodeChild("e")
+@NodeChild("l")
 public abstract class Get extends Expression {
     @Specialization
-    String substr(String a, long s, long e) {
-        return a.substring((int) s, (int) e);
+    String substr(String a, long s, long l) {
+        return a.substring((int) s, (int) s + (int) l);
     }
     @Specialization
-    String substrGen(Object a, Object s, Object e) {
-        return Types.stringCoerce(a).substring((int) Types.longCoerce(s), (int) Types.longCoerce(e));
+    String substrGen(Object a, Object s, Object l) {
+        return Types.stringCoerce(a).substring((int) Types.longCoerce(s), (int) Types.longCoerce(l));
     }
 }

@@ -13,7 +13,7 @@ public abstract class Sub extends Expression {
     private String doSub(String a, long start, long length, String n) {
         int s = (int) start;
         int l = (int) length;
-        return String.join("", a.substring(s, s + l), n, a.substring(s + l));
+        return String.join("", a.substring(0, s), n, a.substring(s + l));
     }
     @Specialization
     String sub(String a, long s, long l, String n) {

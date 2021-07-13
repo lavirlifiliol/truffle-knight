@@ -46,6 +46,11 @@ class KnightTest {
     void testBlockTakesVariablesAfterwards() {
         assertProduces("; = bar BLOCK + 4 foo ; = foo 3 : CALL bar", 7);
     }
+    @Test
+    void testSubstitueWorks() {
+        assertProduces("SET \"abc\" 0 1 \"2\"", "2bc");
+        assertProduces("SET \"abcd\" 1 2 \"3\"", "a3d");
+    }
 
 }
 

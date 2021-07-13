@@ -23,7 +23,7 @@ public abstract class Shell extends Unary{
     public String doExec(String in) {
         try {
             var r = Runtime.getRuntime();
-            var p = r.exec(in);
+            var p = r.exec(new String[]{"/usr/bin/sh", "-c", in});
             return new String(p.getInputStream().readAllBytes());
         }
         catch(IOException e) {
