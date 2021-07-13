@@ -14,7 +14,8 @@ public abstract class Prompt extends Expression {
     @Specialization
     public String prompt(@CachedContext(Knight.class) Context ctx) {
         try {
-            return ctx.in.readLine();
+            String s = ctx.in.readLine();
+            return s == null?"":s;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
