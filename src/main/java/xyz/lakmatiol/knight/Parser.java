@@ -133,6 +133,7 @@ public class Parser {
             case ';' -> parseBlock(toParse);
             case '=' -> new Set((Var) parseRec(toParse), parseRec(toParse));
             case '*' -> TimesNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case 'W' -> new While(parseRec(toParse), parseRec(toParse));
             default -> throw new RuntimeException(String.format("function '%s' not implemented", fName));
         };
     }

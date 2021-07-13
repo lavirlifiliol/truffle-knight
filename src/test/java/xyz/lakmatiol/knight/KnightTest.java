@@ -103,6 +103,10 @@ class UnaryTest extends KnightTest {
         assertProduces("A 38", "&");
         assertProduces("A \"&asdf\"", 38);
     }
+    @Test
+    void testEval() {
+        assertProduces("+++ E \"23\" E \"23\" E \"12\" E \"+ 10 11\"", 23+23+12+10+11);
+    }
 }
 
 class BinaryTest extends KnightTest {
@@ -113,6 +117,18 @@ class BinaryTest extends KnightTest {
     }
     @Test
     void testVariable() {
-        assertProduces("; = a 3 : a", 3);
+        assertProduces("; = a 3 ; = u BLOCK a : + a C u", 6);
+    }
+    @Test
+    void testWhile() {
+        assertProduces("; = a 0 ; W < a 5 = a + a 1 a", 5);
+    }
+    @Test
+    void testComparison() {
+        assertProduces("> 5 5", false);
+        assertProduces("< 5 5", false);
+        assertProduces("> 4 5", false);
+        assertProduces("< 5 4", false);
+        assertProduces("? 5 5", true);
     }
 }
