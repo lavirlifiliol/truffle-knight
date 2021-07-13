@@ -11,16 +11,16 @@ import java.nio.file.Path;
 
 public class KnightMain {
     public static void main(String[] args) throws IOException {
-        if (args.length == 1) {
+        if (args.length == 0) {
             System.out.println("usage: knight (-e 'expr' | -f filename)");
             return;
         }
-        if (args.length == 3) {
+        if (args.length == 2) {
             String source;
-            if (args[1].equals("-f")) {
-                source = Files.readString(Path.of(args[2]));
+            if (args[0].equals("-f")) {
+                source = Files.readString(Path.of(args[1]));
             } else if (args[1].equals("-e")) {
-                source = args[2];
+                source = args[1];
             } else {
                 System.out.println("incorrect usage");
                 return;

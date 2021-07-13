@@ -22,7 +22,7 @@ public abstract class Plus extends Binary {
     }
 
     @Specialization
-    public String doString(String l, Object r) {
+    public String doStringGen(String l, Object r) {
         return l + Types.stringCoerce(r);
     }
 
