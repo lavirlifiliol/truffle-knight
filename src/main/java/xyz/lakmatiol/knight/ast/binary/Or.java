@@ -13,9 +13,4 @@ public class Or extends ShortCircuit{
     protected boolean evalRight(boolean leftValue) {
         return !leftValue;
     }
-
-    @Override
-    protected boolean executeBoolInternal(boolean leftValue, boolean rightValue) {
-        return leftValue || rightValue;
-    }
 }

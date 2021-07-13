@@ -34,6 +34,6 @@ public class KnightMain {
                 .in(System.in)
                 .out(System.out)
                 .build();
-        ctx.eval(Source.create("Knight", s));
+        ctx.eval(Source.create("Knight", ";" + s + " 0")); //ensure that bad values don't end up returned from snippets
     }
 }

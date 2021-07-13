@@ -17,28 +17,17 @@ public abstract class ShortCircuit extends Expression {
         left = l;
         right = r;
     }
+
     @Override
     public Object execute(VirtualFrame frame) {
-        return executeBool(frame);
-    }
-
-    @Override
-    public long executeLong(VirtualFrame frame) throws UnexpectedResultException {
-        return executeBool(frame)?1:0;
-    }
-
-    @Override
-    public boolean executeBool(VirtualFrame frame){
         boolean l;
-        l = Types.boolCoerce(left.execute(frame));
-        boolean r;
+        Object leftRes = left.execute(frame);
+        l = Types.boolCoerce(leftRes);
         if(erProfile.profile(evalRight(l))) {
-            r = Types.boolCoerce(right.execute(frame));
-        } else {
-            r = false;
+             return right.execute(frame);
         }
-        return executeBoolInternal(l, r);
+        return leftRes;
     }
+
     protected abstract boolean evalRight(boolean leftValue);
-    protected abstract boolean executeBoolInternal(boolean leftValue, boolean rightValue);
 }

@@ -42,6 +42,10 @@ class KnightTest {
     void testParser() {
         assertProduces(";=next_ast_name_0+'__ast_fn_'0 next_ast_name_0", "__ast_fn_0");
     }
+    @Test
+    void testBlockTakesVariablesAfterwards() {
+        assertProduces("; = bar BLOCK + 4 foo ; = foo 3 : CALL bar", 7);
+    }
 
 }
 
@@ -134,5 +138,10 @@ class BinaryTest extends KnightTest {
         assertProduces("> 4 5", false);
         assertProduces("< 5 4", false);
         assertProduces("? 5 5", true);
+    }
+    @Test
+    void testShortCircuit() {
+        assertProduces("; = a 3 : CALL | 0 BLOCK a", 3);
+        assertProduces("; = a 3 : CALL & 1 BLOCK a", 3);
     }
 }

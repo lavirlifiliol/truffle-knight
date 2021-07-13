@@ -15,8 +15,4 @@ public class And extends ShortCircuit {
         return leftValue;
     }
 
-    @Override
-    protected boolean executeBoolInternal(boolean leftValue, boolean rightValue) {
-        return leftValue && rightValue;
-    }
 }
