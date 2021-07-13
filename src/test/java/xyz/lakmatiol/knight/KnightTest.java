@@ -155,5 +155,8 @@ class BinaryTest extends KnightTest {
     void testPower() {
         assertProduces("^ (= n 15) (- n 16)", 0);
         assertProduces("^ 1 - 0 3", 1);
+        assertProduces("^ (- 0 1) (- 0 1)", -1);
+        assertProduces("^ (- 0 1) (- 0 2)", 1);
+        assertProduces("^ (- 0 1) (- 0 3)", -1);
     }
 }

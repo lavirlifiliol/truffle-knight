@@ -10,8 +10,12 @@ public abstract class Pow extends Binary {
         if(base == 1) {
             return 1;
         }
-        if(exp < 0) {
-            return 0;
+        if(exp < 0 ) {
+            if(base == -1) {
+                exp = -exp;
+            } else{
+                return 0;
+            }
         }
         long res = 1;
         while(true) {
