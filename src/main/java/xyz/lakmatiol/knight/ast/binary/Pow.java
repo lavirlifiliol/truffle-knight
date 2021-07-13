@@ -7,6 +7,9 @@ import xyz.lakmatiol.knight.ast.TypesGen;
 @NodeInfo(shortName = "^")
 public abstract class Pow extends Binary {
     public long ipow(long base, long exp) {
+        if(exp < 0) {
+            return 0;
+        }
         long res = 1;
         while(true) {
             if(exp % 2 == 1) {
