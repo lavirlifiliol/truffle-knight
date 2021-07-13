@@ -26,11 +26,11 @@ public class Types {
             String r = s.strip();
             int i = 0;
             long mul = 1;
-            if (r.charAt(0) == '-') {
+            if (r.startsWith("-")) {
                 ++i;
                 mul = -1;
             }
-            if(r.charAt(0) == '+') {
+            if(r.startsWith("+")) {
                 ++i;
             }
             for (; i < r.length() && Character.isDigit(r.charAt(i)); ++i) {

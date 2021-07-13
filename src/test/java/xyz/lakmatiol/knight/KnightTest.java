@@ -143,10 +143,17 @@ class BinaryTest extends KnightTest {
         assertProduces("> 4 5", false);
         assertProduces("< 5 4", false);
         assertProduces("? 5 5", true);
+        assertProduces("> 01 \"\"", true);
+        assertProduces("< 0 \"\"", false);
     }
     @Test
     void testShortCircuit() {
         assertProduces("; = a 3 : CALL | 0 BLOCK a", 3);
         assertProduces("; = a 3 : CALL & 1 BLOCK a", 3);
+    }
+    @Test
+    void testPower() {
+        assertProduces("^ (= n 15) (- n 16)", 0);
+        assertProduces("^ 1 - 0 3", 1);
     }
 }
