@@ -22,7 +22,11 @@ public class Types {
     @CompilerDirectives.TruffleBoundary
     public static long longCoerce(Object v) {
         if (v instanceof String s) {
-            return Long.parseLong(s);
+            long res = 0;
+            for(int i = 0; i < s.length() && Character.isDigit(s.charAt(i)); ++i) {
+                res = res * 10 + Character.digit(s.charAt(i), 10);
+            }
+            return res;
         }
         if (v instanceof Long l) {
             return l;

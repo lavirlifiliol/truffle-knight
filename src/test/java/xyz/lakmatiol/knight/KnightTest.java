@@ -111,4 +111,8 @@ class BinaryTest extends KnightTest {
         assertProduces("; 1 ; 2 ; 3 ; 4 : 5", 5);
         assertProduces("; 1 ; P ; 3 ; 4 : P", "fdsa");
     }
+    @Test
+    void testVariable() {
+        assertProduces("; = a 3 : a", 3);
+    }
 }

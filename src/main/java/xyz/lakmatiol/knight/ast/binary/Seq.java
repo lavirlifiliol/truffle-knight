@@ -8,6 +8,8 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import xyz.lakmatiol.knight.ast.Expression;
 import xyz.lakmatiol.knight.ast.unary.Block;
 
+
+/*yes, the implementation is not strictly binary, but it does make it much faster*/
 @NodeInfo(shortName = ";")
 public class Seq extends Expression implements BlockNode.ElementExecutor<Expression> {
     @Child private BlockNode<Expression> block;
@@ -23,6 +25,16 @@ public class Seq extends Expression implements BlockNode.ElementExecutor<Express
     @Override
     public Object execute(VirtualFrame frame) {
         return this.block.executeGeneric(frame, BlockNode.NO_ARGUMENT);
+    }
+
+    @Override
+    public long executeLong(VirtualFrame frame) throws UnexpectedResultException {
+        return this.block.executeLong(frame, BlockNode.NO_ARGUMENT);
+    }
+
+    @Override
+    public boolean executeBool(VirtualFrame frame) throws UnexpectedResultException {
+        return this.block.executeBoolean(frame, BlockNode.NO_ARGUMENT);
     }
 
     @Override

@@ -3,14 +3,15 @@ package xyz.lakmatiol.knight;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.RootNode;
 import xyz.lakmatiol.knight.ast.Expression;
-import xyz.lakmatiol.knight.ast.binary.Seq;
+import xyz.lakmatiol.knight.ast.binary.*;
 import xyz.lakmatiol.knight.ast.nullary.*;
 import xyz.lakmatiol.knight.ast.Root;
-import xyz.lakmatiol.knight.ast.binary.PlusNodeGen;
 import xyz.lakmatiol.knight.ast.unary.*;
 
 import java.io.*;
+import java.lang.reflect.GenericArrayType;
 import java.nio.CharBuffer;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -103,7 +104,6 @@ public class Parser {
     private Expression parseFunction(Iterator<Token> toParse, String fName) {
         char id = fName.charAt(0);
         return switch(id) {
-            case '+' -> PlusNodeGen.create(parseRec(toParse), parseRec(toParse));
             case 'N' -> new Null();
             case 'T' -> new Bool(true);
             case 'F' -> new Bool(false);
@@ -120,7 +120,19 @@ public class Parser {
             case '!' -> NegNodeGen.create(parseRec(toParse));
             case 'O' -> OutputNodeGen.create(parseRec(toParse));
             case 'Q' -> QuitNodeGen.create(parseRec(toParse));
+            case '&' -> new And(parseRec(toParse), parseRec(toParse));
+            case '/' -> DivNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '?' -> EqNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '>' -> GtNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '<' -> LtNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '-' -> MinusNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '%' -> ModNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '|' -> new Or(parseRec(toParse), parseRec(toParse));
+            case '+' -> PlusNodeGen.create(parseRec(toParse), parseRec(toParse));
+            case '^' -> PowNodeGen.create(parseRec(toParse), parseRec(toParse));
             case ';' -> parseBlock(toParse);
+            case '=' -> new Set((Var) parseRec(toParse), parseRec(toParse));
+            case '*' -> TimesNodeGen.create(parseRec(toParse), parseRec(toParse));
             default -> throw new RuntimeException(String.format("function '%s' not implemented", fName));
         };
     }
@@ -143,7 +155,7 @@ public class Parser {
         return switch (tok.k()) {
             case FUN -> parseFunction(toParse, tok.data());
             case NUM -> new Num(Long.parseLong(tok.data()));
-            case VAR -> throw new RuntimeException("variables not done yet");
+            case VAR -> new Var(tok.data());
             case STR -> new Str(tok.data());
         };
     }

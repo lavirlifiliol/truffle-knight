@@ -9,11 +9,11 @@ import java.io.PrintStream;
 import java.util.Map;
 
 public final class Context {
-    public Map<String, Type> variables;
+    public Map<String, Object> variables;
     public TruffleLanguage.Env env;
     public BufferedReader in;
     public PrintStream out;
-    public Context(Map<String, Type> variables, TruffleLanguage.Env env) {
+    public Context(Map<String, Object> variables, TruffleLanguage.Env env) {
         this.env = env;
         this.variables = variables;
         this.in = new BufferedReader(new InputStreamReader(env.in()));
