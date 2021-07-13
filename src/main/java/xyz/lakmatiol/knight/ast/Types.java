@@ -23,10 +23,20 @@ public class Types {
     public static long longCoerce(Object v) {
         if (v instanceof String s) {
             long res = 0;
-            for(int i = 0; i < s.length() && Character.isDigit(s.charAt(i)); ++i) {
-                res = res * 10 + Character.digit(s.charAt(i), 10);
+            String r = s.strip();
+            int i = 0;
+            long mul = 1;
+            if (r.charAt(0) == '-') {
+                ++i;
+                mul = -1;
             }
-            return res;
+            if(r.charAt(0) == '+') {
+                ++i;
+            }
+            for (; i < r.length() && Character.isDigit(r.charAt(i)); ++i) {
+                res = res * 10 + Character.digit(r.charAt(i), 10);
+            }
+            return res * mul;
         }
         if (v instanceof Long l) {
             return l;
