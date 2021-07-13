@@ -16,6 +16,10 @@ public class Var extends Expression {
 
     @Override
     public Object execute(VirtualFrame frame) {
-        return lookupContextReference(Knight.class).get().variables.get(name);
+        var res = lookupContextReference(Knight.class).get().variables.get(name);
+        if(res == null) {
+            throw new RuntimeException("Undefined variable: " + name);
+        }
+        return res;
     }
 }

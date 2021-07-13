@@ -41,6 +41,7 @@ class KnightTest {
     @Test
     void testParser() {
         assertProduces(";=next_ast_name_0+'__ast_fn_'0 next_ast_name_0", "__ast_fn_0");
+        assertProduces("; =next_arg B 34 ; = run_ast_arg0_0Cnext_arg run_ast_arg0_0", 34);
     }
     @Test
     void testBlockTakesVariablesAfterwards() {
@@ -119,6 +120,7 @@ class UnaryTest extends KnightTest {
     @Test
     void testEval() {
         assertProduces("+++ E \"23\" E \"23\" E \"12\" E \"+ 10 11\"", 23+23+12+10+11);
+        assertProduces("; E \"= a 4\" ; O a 1", 1);
     }
 }
 

@@ -84,12 +84,20 @@ public class Parser {
                 l.add(new Token(TokenKind.STR, currentData.toString()));
                 currentData = new StringBuilder();
             } else if (Character.isLowerCase(r) || r == '_') {
-                if (currentKind == null) {
+                if (currentKind != TokenKind.VAR) {
+                    if(currentKind != null) {
+                        l.add(new Token(currentKind, currentData.toString()));
+                    }
+                    currentData = new StringBuilder();
                     currentKind = TokenKind.VAR;
                 }
                 currentData.append(r);
             } else if (Character.isUpperCase(r)) {
-                if (currentKind == null) {
+                if (currentKind != TokenKind.FUN) {
+                    if(currentKind != null) {
+                        l.add(new Token(currentKind, currentData.toString()));
+                    }
+                    currentData = new StringBuilder();
                     currentKind = TokenKind.FUN;
                 }
                 currentData.append(r);
