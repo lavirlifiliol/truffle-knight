@@ -19,7 +19,7 @@ public class KnightMain {
             String source;
             if (args[0].equals("-f")) {
                 source = Files.readString(Path.of(args[1]));
-            } else if (args[1].equals("-e")) {
+            } else if (args[0].equals("-e")) {
                 source = args[1];
             } else {
                 System.out.println("incorrect usage");
