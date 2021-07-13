@@ -6,6 +6,9 @@ import xyz.lakmatiol.knight.ast.Expression;
 import xyz.lakmatiol.knight.ast.binary.*;
 import xyz.lakmatiol.knight.ast.nullary.*;
 import xyz.lakmatiol.knight.ast.Root;
+import xyz.lakmatiol.knight.ast.other.GetNodeGen;
+import xyz.lakmatiol.knight.ast.other.If;
+import xyz.lakmatiol.knight.ast.other.SubNodeGen;
 import xyz.lakmatiol.knight.ast.unary.*;
 
 import java.io.*;
@@ -134,6 +137,9 @@ public class Parser {
             case '=' -> new Set((Var) parseRec(toParse), parseRec(toParse));
             case '*' -> TimesNodeGen.create(parseRec(toParse), parseRec(toParse));
             case 'W' -> new While(parseRec(toParse), parseRec(toParse));
+            case 'I' -> new If(parseRec(toParse), parseRec(toParse), parseRec(toParse));
+            case 'G' -> GetNodeGen.create(parseRec(toParse), parseRec(toParse), parseRec(toParse));
+            case 'S' -> SubNodeGen.create(parseRec(toParse), parseRec(toParse), parseRec(toParse), parseRec(toParse));
             default -> throw new RuntimeException(String.format("function '%s' not implemented", fName));
         };
     }
