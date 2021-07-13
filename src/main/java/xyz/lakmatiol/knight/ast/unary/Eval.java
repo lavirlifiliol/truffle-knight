@@ -38,7 +38,6 @@ public abstract class Eval extends Unary {
     }
 
     @Specialization
-    @CompilerDirectives.TruffleBoundary
     public Object evalGen(Object o, @CachedContext(Knight.class) Context c) {
         return parse(Types.stringCoerce(o), c).call();
     }

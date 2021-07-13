@@ -2,6 +2,7 @@ package xyz.lakmatiol.knight.ast.binary;
 
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import xyz.lakmatiol.knight.ast.Types;
 import xyz.lakmatiol.knight.ast.TypesGen;
 
 @NodeInfo(shortName = "%")
@@ -16,6 +17,7 @@ public abstract class Mod extends Binary{
     }
     @Specialization
     public long doUB(Object l, Object r) {
-        throw new RuntimeException("UB");
+        Types.errorUB();
+        return 0;
     }
 }

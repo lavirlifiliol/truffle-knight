@@ -28,6 +28,7 @@ public abstract class Plus extends Binary {
 
     @Specialization
     public String doGeneric(Object l, Object r) {
-        throw new RuntimeException("UB");
+        Types.errorUB();
+        return null;
     }
 }

@@ -54,7 +54,10 @@ public class Types {
     public static String stringCoerce(Object v) {
         return v.toString();
     }
-
+    @CompilerDirectives.TruffleBoundary
+    public static void errorUB() {
+        throw new RuntimeException("UB");
+    }
     public static boolean boolCoerce(Object v) {
         if (v instanceof String s) {
             return !s.isEmpty();

@@ -29,6 +29,7 @@ public abstract class Times extends Binary {
 
     @Specialization
     public Object doUB(Object l, Object r) {
-        throw new RuntimeException("UB");
+        Types.errorUB();
+        return 0;
     }
 }

@@ -1,6 +1,7 @@
 package xyz.lakmatiol.knight.ast.unary;
 
 import com.oracle.truffle.api.dsl.Specialization;
+import xyz.lakmatiol.knight.ast.Types;
 
 public abstract class Ascii extends Unary{
     @Specialization
@@ -13,6 +14,7 @@ public abstract class Ascii extends Unary{
     }
     @Specialization
     public Object asciiGeneric(Object ignored) {
-        throw new RuntimeException("UB");
+        Types.errorUB();
+        return null;
     }
 }

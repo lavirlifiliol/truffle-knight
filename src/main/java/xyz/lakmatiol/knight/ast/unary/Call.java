@@ -3,6 +3,7 @@ package xyz.lakmatiol.knight.ast.unary;
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import xyz.lakmatiol.knight.ast.Expression;
+import xyz.lakmatiol.knight.ast.Types;
 
 public abstract class Call extends Unary {
     @Specialization
@@ -11,6 +12,7 @@ public abstract class Call extends Unary {
     }
     @Specialization
     public Object callGeneric(Object s) {
-        throw new RuntimeException("UB");
+        Types.errorUB();
+        return null;
     }
 }
