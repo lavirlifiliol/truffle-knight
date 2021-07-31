@@ -175,7 +175,7 @@ public class Parser {
         return switch (tok.k()) {
             case FUN -> parseFunction(toParse, tok.data());
             case NUM -> new Num(Long.parseLong(tok.data()));
-            case VAR -> new Var(tok.data());
+            case VAR -> VarNodeGen.create(tok.data());
             case STR -> new Str(tok.data());
         };
     }
